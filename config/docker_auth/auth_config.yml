@@ -1,0 +1,28 @@
+server:
+  addr: ':5001'
+  # TODO: not sure what it's for, the doc also have away for letsencrypt
+  certificate: '/path/to/server.pem'
+  key: '/path/to/server.key'
+
+token:
+  issuer: 'Docker auth issuer'
+  expiration: 900
+
+users:
+  # Password is specified as a BCrypt hash. Use htpasswd to generate.
+  'admin':
+    password: '' # Need generate a password
+  'telescope-ci':
+    password: '' # Need generate a password
+  '': {}
+
+acl:
+  - match: { account: 'admin' }
+    actions: ['*']
+    comment: 'Admin has full access to everything.'
+  - match: { account: 'telescope-ci' }
+    actions: ['push', 'pull']
+    comment: 'Telescope CI has push and pull access'
+  - match: { account: '' }
+    actions: ['pull']
+    comment: 'Any user has pull access'
