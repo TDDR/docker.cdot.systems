@@ -9,7 +9,7 @@ services:
       - ./config/etc/nginx/nginx.conf:/etc/nginx/nginx.conf
       - /etc/letsencrypt:/etc/letsencrypt
     depends_on: 
-      - registry
+      - registry  
     command: /bin/sh -c "while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g 'daemon off;'"
   
   # SSL certificate management for nginx
@@ -27,3 +27,4 @@ services:
     image: registry:2
     volumes:
       - /mnt/docker0storage/registry:/var/lib/registry
+      - /mnt/docker0storage/config:/var/lib/config # Where will we store the config file?
